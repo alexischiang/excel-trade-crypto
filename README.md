@@ -1,4 +1,4 @@
-# Color me
+# Excel-Trade-Crypto
 
 This project is using Office.js and React to build an Excel add-in which you can easily trade crypto with.
 
@@ -13,17 +13,12 @@ This project is using Office.js and React to build an Excel add-in which you can
     - For Excel Online, use the upload my add-in button from the add-in command dialog to upload the manifest file. 
 
 2. Run this in the terminal for a dev server.
-
-    - Windows
+    
+    -  macOS & windows
     
         ```bash
-        set HTTPS=true&&npm start
-        ```
-    
-    -  macOS
-    
-        ```bash
-        HTTPS=true npm start
+        npm i
+        npm start
         ```
 
 3. Open Excel and click the Add-in to load.
@@ -31,4 +26,5 @@ This project is using Office.js and React to build an Excel add-in which you can
 ## Local Backend 
 
 Make sure you've run the backend server before you run this project.
+
 [local backend server](https://github.com/alexischiang/excel-trade-crypto-backend).
