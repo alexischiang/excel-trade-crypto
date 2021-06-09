@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Form, Input, Button, Select, Row, Col } from 'antd';
 import { OptionPicker } from '../OptionPicker/OptionPicker'
+import { IndexPrice } from '../IndexPrice/IndexPrice'
 import axios from 'axios'
 import { useSnackbar } from 'notistack';
 const { Option } = Select;
@@ -50,7 +51,7 @@ export const Order = () => {
             }}
         >
             <Row gutter={[5, 10]}>
-                <Col span={24}>
+                <Col span={16}>
                     <Form.Item name='symbol' rules={[
                         {
                             required: true,
@@ -59,6 +60,9 @@ export const Order = () => {
                     ]}>
                         <OptionPicker form={form} />
                     </Form.Item>
+                </Col>
+                <Col span={6} offset={1}>
+                    <IndexPrice />
                 </Col>
                 <Col span={18}>
                     <Form.Item name="price" rules={[

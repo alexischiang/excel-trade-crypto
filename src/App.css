@@ -77,3 +77,9 @@
 .ant-table tfoot > tr > td {
     padding: 3px !important;
 }
+
+/* Statistic-title */
+.ant-statistic-title {
+    font-size: 10px !important;
+    margin-bottom: 0 !important;
+}
