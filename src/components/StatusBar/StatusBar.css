@@ -1,0 +1,17 @@
+.status-text {
+    font-size: 500;
+    font-size: 11px;
+    margin-left: 5px;
+    color: rgb(158, 158, 158);
+}
+
+.loading,
+.unloading {
+    display: flex;
+    align-items: center;
+}
+
+svg {
+    position: relative;
+    bottom: 1px;
+}

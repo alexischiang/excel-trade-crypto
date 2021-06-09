@@ -1,0 +1,79 @@
+.App-logo {
+    height: 80px;
+    animation: App-logo-spin infinite 20s linear;
+}
+
+.title {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    text-align: left;
+    border-bottom: 1px solid black;
+}
+
+
+.App-header {
+    height: 150px;
+    padding: 20px;
+    color: white;
+    background-color: #222;
+}
+
+.App-intro {
+    font-size: large;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.active-btn,
+.ant-btn[disabled],
+.ant-btn[disabled]:hover {
+    color: #40a9ff !important;
+    border-color: #40a9ff !important;
+    background-color: white !important;
+}
+
+.ant-divider-horizontal {
+    margin: 13px 0 !important;
+}
+
+.ant-cascader-picker {
+    display: block !important;
+}
+
+.ant-form-item {
+    margin-bottom: 0 !important;
+}
+
+.positive-number {
+    color: #02c076;
+}
+
+.negative-number {
+    color: #f84960;
+}
+
+/* 持仓表格 */
+.position-table {
+    margin-top: 10px;
+}
+
+.position-table .ant-table {
+    font-size: 12px;
+}
+
+.position-table .ant-table-thead > tr > th,
+.ant-table-tbody > tr > td,
+.ant-table tfoot > tr > th,
+.ant-table tfoot > tr > td {
+    padding: 3px !important;
+}
