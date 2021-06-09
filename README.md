@@ -1,6 +1,6 @@
 # Color me
 
-This project is showing how you can use Office.js and React to build an Excel add-in.
+This project is using Office.js and React to build an Excel add-in which you can easily trade crypto with.
 
 ## How to run
 
@@ -28,12 +28,7 @@ This project is showing how you can use Office.js and React to build an Excel ad
 
 3. Open Excel and click the Add-in to load.
 
-<img width="1156" alt="screenshot" src="https://user-images.githubusercontent.com/3375461/27309424-87a21b06-5508-11e7-91c6-c9468efdbad0.png">
+## Local Backend 
 
-## How to create a new project by yourself
-
-Follow the step by step tutorial [here](https://hongbo-miao.gitbooks.io/excel/content/quick-start/react.html).
-
-## Learn more 
-
-To learn more about JavaScript API for Office (Office.js), please check [here](https://github.com/Hongbo-Miao/office-addin-quick-start/blob/master/react.md).
+Make sure you've run the backend server before you run this project.
+[local backend server](https://github.com/alexischiang/excel-trade-crypto-backend).
