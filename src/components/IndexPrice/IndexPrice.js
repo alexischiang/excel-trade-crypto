@@ -24,7 +24,6 @@ export const IndexPrice = () => {
     }
 
     useEffect(() => {
-
         setupWebsocket()
     }, [])
 

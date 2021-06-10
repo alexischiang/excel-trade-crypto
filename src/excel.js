@@ -1,6 +1,6 @@
 export const fillRange = (_range, data) => {
     window.Excel.run(function (context) {
-        const sheet = context.workbook.worksheets.getActiveWorksheet();
+        const sheet = context.workbook.worksheets.getItem('Crypto');
 
         const range = sheet.getRange(_range);
         range.values = data
@@ -18,7 +18,7 @@ export const arrToCol = (arr) => arr.map(i => [i])
 
 export const clearRange = () => {
     window.Excel.run(function (context) {
-        const sheet = context.workbook.worksheets.getActiveWorksheet();
+        const sheet = context.workbook.worksheets.getItem('Crypto');
 
 
         const range = sheet.getRange('A1:Z100');
@@ -30,7 +30,7 @@ export const clearRange = () => {
 
 export const paintRange = (_range, background, font = 'black') => {
     window.Excel.run(function (context) {
-        const sheet = context.workbook.worksheets.getActiveWorksheet();
+        const sheet = context.workbook.worksheets.getItem('Crypto');
 
         const range = sheet.getRange(_range);
         range.format.fill.color = background;
@@ -42,7 +42,7 @@ export const paintRange = (_range, background, font = 'black') => {
 
 export const boldRange = (_range) => {
     window.Excel.run(function (context) {
-        const sheet = context.workbook.worksheets.getActiveWorksheet();
+        const sheet = context.workbook.worksheets.getItem('Crypto');
 
         const range = sheet.getRange(_range);
         range.format.font.bold = true
@@ -53,7 +53,7 @@ export const boldRange = (_range) => {
 
 export const changeRangeFontsize = (_range, fontsize) => {
     window.Excel.run(function (context) {
-        const sheet = context.workbook.worksheets.getActiveWorksheet();
+        const sheet = context.workbook.worksheets.getItem('Crypto');
 
         const range = sheet.getRange(_range);
         range.format.font.size = +fontsize
