@@ -4,6 +4,7 @@ import App from './App';
 import './index.css';
 import { HashRouter as Router } from 'react-router-dom'
 import { SnackbarProvider } from 'notistack';
+import { Option } from './context/OptionContext'
 
 const Office = window.Office;
 
@@ -13,7 +14,9 @@ Office.initialize = () => {
 	ReactDOM.render((
 		<SnackbarProvider maxSnack={2} hideIconVariant >
 			<Router>
-				<App />
+				<Option>
+					<App />
+				</Option>
 			</Router>
 		</SnackbarProvider>
 	), document.getElementById('root'));

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Divider, Button } from 'antd'
 import { onCombinedStream as _onCombinedStream } from './ws'
 import { fillRange, clearRange } from '../../excel'
@@ -9,6 +9,8 @@ import { useSnackbar } from 'notistack';
 import BigNumber from "bignumber.js";
 import _ from 'lodash'
 
+import { OptionContext, UPDATE_TEXT } from '../../context/OptionContext'
+
 
 const _axios = axios.create()
 
@@ -17,6 +19,9 @@ export const BinancePage = () => {
     const [wsStatus, setWsStatus] = useState(false)
     const { enqueueSnackbar } = useSnackbar();
     const [positionData, setPositionData] = useState([])
+
+    const { text, dispatch } = useContext(OptionContext)
+
 
     const [posLoading, setPosLoading] = useState(false)
 
