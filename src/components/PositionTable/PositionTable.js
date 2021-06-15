@@ -11,8 +11,8 @@ export const PositionTable = ({ dataSource }) => {
             title: '方向',
             dataIndex: 'side',
             render: d => (
-                <span className={d == 'LONG' ? 'positive-number' : 'negative-number'}>{
-                    d == 'LONG' ? '买' : '卖'
+                <span className={d === 'LONG' ? 'positive-number' : 'negative-number'}>{
+                    d === 'LONG' ? '买' : '卖'
                 }</span>
             )
         },

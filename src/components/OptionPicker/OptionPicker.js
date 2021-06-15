@@ -10,7 +10,7 @@ export const OptionPicker = ({ value = {}, onChange, form }) => {
     // 数组去重
     const uniqueSorted = (arr) => {
         let res = arr.filter((item, index, arr) => {
-            return arr.indexOf(item) == index;
+            return arr.indexOf(item) === index;
         });
         return res.sort((a, b) => a - b);
     }

@@ -2,8 +2,7 @@ import React from 'react'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import { Statistic, Row, Col } from 'antd';
 import { useEffect, useState } from 'react';
-import { fillRange } from '../../excel'
-import _ from 'lodash'
+import { fillRange } from '../../tools/excel'
 
 
 export const IndexPrice = () => {

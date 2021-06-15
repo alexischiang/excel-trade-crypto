@@ -1,10 +1,13 @@
-import React, { useContext, useReducer } from 'react'
+import React, { useReducer } from 'react'
 
-const BinanceContext = React.createContext(null)
+export const BinanceContext = React.createContext(null)
 
 const initValue = {
-    expireDate: [],
-    strikePrice: {}
+    expiryDate: [],
+    strikePrice: {},
+    tableTotal: 0,
+    tableGap: 16,  // 每一张表的高度
+    suffixTableGap: 3, // 第一张表距顶部的距离
 }
 
 export const BinanceProvider = ({ reducer, children }) => {
@@ -14,5 +17,3 @@ export const BinanceProvider = ({ reducer, children }) => {
         </BinanceContext.Provider>
     )
 }
-
-export const useBinanceContext = useContext(BinanceContext)

@@ -1,16 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Divider, Button } from 'antd'
-import { onCombinedStream as _onCombinedStream } from './ws'
-import { fillRange, clearRange } from '../../excel'
+import { onCombinedStream as _onCombinedStream } from './ws/ws'
+import { fillRange, clearRange } from '../../tools/excel'
 import { StatusBar, Order, PositionTable } from '../../components'
 import axios from 'axios'
-import { writeOptionChartHeader, writeStrikePrices } from '../../tools'
+import { writeOptionChartHeader, writeStrikePrices } from '../../tools/writer'
 import { useSnackbar } from 'notistack';
 import BigNumber from "bignumber.js";
 import _ from 'lodash'
-
-import { OptionContext, UPDATE_TEXT } from '../../context/OptionContext'
-
+import { BinanceContext } from './context'
+import { IVChart } from './components'
 
 const _axios = axios.create()
 
@@ -20,7 +19,7 @@ export const BinancePage = () => {
     const { enqueueSnackbar } = useSnackbar();
     const [positionData, setPositionData] = useState([])
 
-    const { text, dispatch } = useContext(OptionContext)
+    const [state, dispatch] = useContext(BinanceContext)
 
 
     const [posLoading, setPosLoading] = useState(false)
@@ -30,8 +29,6 @@ export const BinancePage = () => {
             variant: 'error',
         })
     }
-
-    const [ws, setWs] = useState({})
 
     /**
      * RestAPI获取当前价格铺入单元格
@@ -48,8 +45,8 @@ export const BinancePage = () => {
         setPosLoading(true)
         _axios.get('http://localhost:80/binance/voption/currentPosition')
             .then(d => {
-                if (d.data.code == 200) {
-                    if (positionData.length != 0) {
+                if (d.data.code === 200) {
+                    if (positionData.length !== 0) {
                         enqueueSnackbar('已获取最新持仓', {
                             variant: 'success'
                         })
@@ -74,6 +71,12 @@ export const BinancePage = () => {
                 getStrikePrice(date, index)
                 writeOptionChartHeader(index)
             })
+            dispatch({
+                type: 'UPDATE_EXPIRY_DATE',
+                payload: {
+                    expiryDate: d.data.message
+                }
+            })
         }).catch(_err => timeoutHandler('/binance/voption/expiryDate'))
     }
 
@@ -84,7 +87,7 @@ export const BinancePage = () => {
      */
     const getStrikePrice = (expiryDate, chartIndex) => {
         _axios.post('http://localhost:80/binance/voption/strikePrice', { expiryDate }).then(d => {
-            if (d.data.code == 200) {
+            if (d.data.code === 200) {
 
                 const strikePrices = d.data.message
                 let streamRangePair = {}
@@ -101,8 +104,13 @@ export const BinancePage = () => {
                     streamRangePair[`${singlePair[0]}@TICKER`] = `${cStartIndex}:${cEndIndex}`
                     streamRangePair[`${singlePair[1]}@TICKER`] = `${pStartIndex}:${pEndIndex}`
 
+
                 })
                 onCombinedStream(streamRangePair)
+                dispatch({
+                    type: 'UPDATE_STRIKE_PRICE',
+                    payload: [expiryDate, strikePrices]
+                })
             } else {
                 timeoutHandler(`${expiryDate}行权价`)
             }
@@ -111,7 +119,7 @@ export const BinancePage = () => {
 
 
     const writeCombineOptionsDetail = (wsObj, streamRangePair) => {
-        if (wsObj != undefined) {
+        if (wsObj !== undefined) {
             const range = streamRangePair[wsObj.stream]
             if (_.isObject(wsObj) && ('stream' in wsObj)) {
                 writeOptionsDetail(wsObj, range, !wsObj.stream.includes('P'))
@@ -133,7 +141,7 @@ export const BinancePage = () => {
 
     const onCombinedStream = (streamRangePair) => {
         const streams = Object.keys(streamRangePair)
-        setWs(_onCombinedStream(streams, d => writeCombineOptionsDetail(d, streamRangePair), setWsStatus))
+        _onCombinedStream(streams, d => writeCombineOptionsDetail(d, streamRangePair), setWsStatus)
     }
 
     const generateSymbol = (date, price) => {
@@ -150,8 +158,10 @@ export const BinancePage = () => {
     }, [])
 
 
+    const canPrintIV = (Object.keys(state.strikePrice).length === state.expiryDate.length) && (state.expiryDate.length !== 0)
+
     return (
-        <div>
+        <section>
             <StatusBar wsStatus={wsStatus} />
 
             <Divider />
@@ -163,6 +173,8 @@ export const BinancePage = () => {
             <Button loading={posLoading} onClick={getCurrentPosition}>刷新持仓列表</Button>
 
             <PositionTable dataSource={positionData} />
-        </div >
+
+            {canPrintIV && <IVChart />}
+        </section>
     )
 }

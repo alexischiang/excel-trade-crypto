@@ -9,15 +9,13 @@ const writeHeader = (chartIndex) => {
     const beginRange = window.excelRow[window.excelRow.indexOf('N') - 10]
     const endRange = window.excelRow[window.excelRow.indexOf('N') - 1]
     const range = `${beginRange}${startRangeIndex}:${endRange}${startRangeIndex}`
-    paintRange(range, "#4472C4", "white")
 
     const reverseBeginRange = window.excelRow[window.excelRow.indexOf('N') + 1]
     const reverseEndRange = window.excelRow[window.excelRow.indexOf('N') + 10]
     const reverseRange = `${reverseBeginRange}${startRangeIndex}:${reverseEndRange}${startRangeIndex}`
-    paintRange(reverseRange, "#4472C4", "white")
 
-    fillRange(range, [optionChartHeader])
-    fillRange(reverseRange, [optionChartHeader.slice().reverse()])
+    fillRange(range, [optionChartHeader], { background: '#4472c4', color: 'white' })
+    fillRange(reverseRange, [optionChartHeader.slice().reverse()], { background: '#4472c4', color: 'white' })
 }
 
 const writeSubheader = (chartIndex) => {
@@ -25,11 +23,8 @@ const writeSubheader = (chartIndex) => {
     const callRange = `${window.excelRow[window.excelRow.indexOf('N') - 10]}${startRangeIndex}`
     const putRange = `${window.excelRow[window.excelRow.indexOf('N') + 10]}${startRangeIndex}`
 
-    fillRange(callRange, '看涨期权')
-    paintRange(callRange, '#65a33e', 'white')
-    fillRange(putRange, '看跌期权')
-    paintRange(putRange, '#ff0001', 'white')
-
+    fillRange(callRange, '看涨期权', { background: '#65a33e', color: 'white' })
+    fillRange(putRange, '看跌期权', { background: '#ff0001', color: 'white' })
 }
 
 /**
@@ -43,8 +38,7 @@ export const writeStrikePrices = (expiryDate, data, chartIndex) => {
         data = arrToCol(data)
     }
     const startRangeIndex = 4 + chartIndex * 16
-    fillRange(`N${startRangeIndex}`, expiryDate)
-    boldRange(`N${startRangeIndex}`)
+    fillRange(`N${startRangeIndex}`, expiryDate, { bold: true })
 
     fillRange(`N${startRangeIndex + 1}`, '行权价')
     fillRange(`N${startRangeIndex + 2}:N${startRangeIndex + 1 + len}`, data)
@@ -56,4 +50,5 @@ export const writeOptionChartHeader = (chartIndex) => {
     writeHeader(chartIndex)
     writeSubheader(chartIndex)
 }
+
 

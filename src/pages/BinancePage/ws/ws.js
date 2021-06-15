@@ -1,6 +1,6 @@
 import _ from 'underscore'
 import { message } from 'antd'
-import { beautify } from './tools'
+import { beautify } from './beautify'
 import lodash from 'lodash'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 const BinanceErrors = Object.freeze({

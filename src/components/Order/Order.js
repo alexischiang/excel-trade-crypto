@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form, Input, Button, Select, Row, Col } from 'antd';
 import { OptionPicker } from '../OptionPicker/OptionPicker'
 import { IndexPrice } from '../IndexPrice/IndexPrice'
 import axios from 'axios'
 import { useSnackbar } from 'notistack';
+import { BinanceContext } from '../../pages/BinancePage/context/BinanceContext'
 const { Option } = Select;
 
 
@@ -16,6 +17,11 @@ export const Order = () => {
     const [form] = Form.useForm();
     const [needPrice, setNeedPrice] = useState(false)
     const [orderLoading, setOrderLoading] = useState(false)
+
+    const [state, dispatch] = useContext(BinanceContext)
+
+
+    console.log(state)
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -31,7 +37,7 @@ export const Order = () => {
         }
         console.log(params)
         axios.post('http://localhost:80/binance/voption/newOrder', params).then(d => {
-            if (d.data.code == 200) {
+            if (d.data.code === 200) {
                 enqueueSnackbar('委托成功', {
                     variant: 'success'
                 })
@@ -79,7 +85,7 @@ export const Order = () => {
                         <Select
                             placeholder="类型"
                             onChange={v => {
-                                setNeedPrice(v == 'LIMIT')
+                                setNeedPrice(v === 'LIMIT')
                                 form.validateFields(['price'])
                             }}
                         >

@@ -1,4 +1,15 @@
-export const fillRange = (_range, data) => {
+export const fillRange = (_range, data, style = {}) => {
+    const defaultStyle = {
+        fontSize: 12,
+        color: 'black',
+        background: '',
+        bold: false
+    }
+
+    if (style) {
+        style = Object.assign(defaultStyle, style)
+    }
+
     window.Excel.run(function (context) {
         const sheet = context.workbook.worksheets.getItem('Crypto');
 
@@ -8,7 +19,14 @@ export const fillRange = (_range, data) => {
         range.format.autofitColumns()
         range.format.autofitRows()
         range.format.horizontalAlignment = 'center'
-        changeRangeFontsize(_range, 13)
+        changeRangeFontsize(_range, 12)
+
+        paintRange(_range, style.background, style.color)
+        changeRangeFontsize(_range, style.fontSize)
+        if (style.bold) {
+            boldRange(_range)
+        }
+
 
         return context.sync().catch((err) => console.log(err))
     });
@@ -21,7 +39,7 @@ export const clearRange = () => {
         const sheet = context.workbook.worksheets.getItem('Crypto');
 
 
-        const range = sheet.getRange('A1:Z100');
+        const range = sheet.getRange('A1:Z200');
         range.delete();
 
         return context.sync().then(() => console.log('清空成功')).catch((err) => console.log(err))

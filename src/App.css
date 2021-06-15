@@ -65,6 +65,7 @@
 /* 持仓表格 */
 .position-table {
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .position-table .ant-table {

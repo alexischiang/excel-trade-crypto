@@ -5,6 +5,10 @@ import { BinancePage } from './pages'
 import { useSnackbar } from 'notistack';
 import { Divider } from 'antd';
 import { Button, Space } from 'antd'
+
+import { BinanceProvider, reducer } from './pages/BinancePage/context'
+
+
 const App = () => {
 	const { enqueueSnackbar } = useSnackbar();
 
@@ -33,8 +37,8 @@ const App = () => {
 						return <Button
 							key={i}
 							onClick={() => changeExchange(exchange)}
-							className={currentEx == exchange && 'active-btn'}
-							disabled={currentEx == exchange}
+							className={currentEx === exchange && 'active-btn'}
+							disabled={currentEx === exchange}
 						>{exchange.toUpperCase()}</Button>
 					})
 				}
@@ -45,7 +49,11 @@ const App = () => {
 
 			<div className={'router-view'}>
 				<Switch>
-					<Route path='/binance' component={BinancePage} />
+					<Route path='/binance' render={() =>
+						<BinanceProvider reducer={reducer}>
+							<BinancePage />
+						</BinanceProvider>
+					} />
 				</Switch>
 			</div>
 
