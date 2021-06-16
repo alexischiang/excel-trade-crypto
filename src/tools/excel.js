@@ -6,9 +6,7 @@ export const fillRange = (_range, data, style = {}) => {
         bold: false
     }
 
-    if (style) {
-        style = Object.assign(defaultStyle, style)
-    }
+    style = Object.assign(defaultStyle, style)
 
     window.Excel.run(function (context) {
         const sheet = context.workbook.worksheets.getItem('Crypto');
@@ -19,6 +17,7 @@ export const fillRange = (_range, data, style = {}) => {
         range.format.autofitColumns()
         range.format.autofitRows()
         range.format.horizontalAlignment = 'center'
+
         changeRangeFontsize(_range, 12)
 
         paintRange(_range, style.background, style.color)
@@ -26,7 +25,6 @@ export const fillRange = (_range, data, style = {}) => {
         if (style.bold) {
             boldRange(_range)
         }
-
 
         return context.sync().catch((err) => console.log(err))
     });
@@ -51,10 +49,12 @@ export const paintRange = (_range, background, font = 'black') => {
         const sheet = context.workbook.worksheets.getItem('Crypto');
 
         const range = sheet.getRange(_range);
-        range.format.fill.color = background;
+        if (background !== '') {
+            range.format.fill.color = background;
+        }
         range.format.font.color = font;
 
-        return context.sync().catch((err) => console.log(err))
+        return context.sync().catch(() => console.log('paint err'))
     });
 }
 

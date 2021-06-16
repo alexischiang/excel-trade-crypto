@@ -1,10 +1,9 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, } from 'react'
 import { Form, Input, Button, Select, Row, Col } from 'antd';
 import { OptionPicker } from '../OptionPicker/OptionPicker'
 import { IndexPrice } from '../IndexPrice/IndexPrice'
 import axios from 'axios'
 import { useSnackbar } from 'notistack';
-import { BinanceContext } from '../../pages/BinancePage/context/BinanceContext'
 const { Option } = Select;
 
 
@@ -18,11 +17,6 @@ export const Order = () => {
     const [needPrice, setNeedPrice] = useState(false)
     const [orderLoading, setOrderLoading] = useState(false)
 
-    const [state, dispatch] = useContext(BinanceContext)
-
-
-    console.log(state)
-
     const { enqueueSnackbar } = useSnackbar();
 
     const onFinish = (values) => {
@@ -35,7 +29,6 @@ export const Order = () => {
             quantity: values.quantity,
             timeInForce: 'GTC'
         }
-        console.log(params)
         axios.post('http://localhost:80/binance/voption/newOrder', params).then(d => {
             if (d.data.code === 200) {
                 enqueueSnackbar('委托成功', {
@@ -113,7 +106,7 @@ export const Order = () => {
                             loading={orderLoading}
                         >
                             买
-                      </Button>
+                        </Button>
                     </Form.Item>
                 </Col>
                 <Col span={12}>
@@ -126,7 +119,7 @@ export const Order = () => {
 
                         >
                             卖
-                      </Button>
+                        </Button>
                     </Form.Item>
                 </Col>
             </Row>

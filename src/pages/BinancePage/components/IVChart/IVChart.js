@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { BinanceContext } from '../../context'
 import { Button } from 'antd'
-import _ from 'lodash'
+import _, { floor } from 'lodash'
 import { fillRange, arrToCol } from '../../../../tools/excel'
 
 export const IVChart = () => {
@@ -17,9 +17,10 @@ export const IVChart = () => {
         }
         const dateIndex = expiryDate.indexOf(date)
         const priceIndex = strikePrice[date].indexOf(price)
-        if (dateIndex == -1 || priceIndex == -1) return ''
+        if (dateIndex === -1 || priceIndex === -1) return ''
 
         const yAxis = (dateIndex * 16) + suffixTableGap + 2 + (priceIndex + 1)
+        // console.log(date, price, side, symbol, xAxis + yAxis)
         return xAxis + yAxis
     }
 
@@ -50,10 +51,10 @@ export const IVChart = () => {
                 const arr = ['C-BUY', 'C-SELL', 'P-BUY', 'P-SELL']
                 if (arr.includes(date)) return
                 leftTopY = window.excelRow[3 + xI]
-                console.log(xI)
-                const currentChart = arr[xI % (xAxis.length + 1)].split('-')
+                const currentChart = arr[floor(xI / (xAxis.length + 1))].split('-')
+                console.log(currentChart)
                 const copyRange = calCopyRange(date, `${price}`, currentChart[1], currentChart[0])
-                fillRange(`${leftTopY}${leftTopX}`, copyRange == '' ? '' : '=' + copyRange)
+                fillRange(`${leftTopY}${leftTopX}`, copyRange === '' ? '' : '=' + copyRange)
             })
             leftTopX += 1
         })
